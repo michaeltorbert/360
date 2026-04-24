@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>360 Sydney Viewer</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23053b56'/%3E%3Cpath d='M10 37c7-10 16-15 28-15 7 0 13 2 16 6-5-1-10 1-15 5-8 7-18 9-29 4Z' fill='%230a8fb5'/%3E%3Ccircle cx='43' cy='18' r='7' fill='%23f7b733'/%3E%3Cpath d='M7 45c13 5 28 5 50 0' fill='none' stroke='%23ffe5ae' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="viewer-shell">
+      <canvas id="viewer" aria-label="360 panorama viewer"></canvas>
+
+      <div class="vignette vignette-top"></div>
+      <div class="vignette vignette-bottom"></div>
+
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">360 Sydney</p>
+          <h1 id="image-title">Loading panorama</h1>
+        </div>
+        <div class="button-row" aria-label="Viewer controls">
+          <button id="previous-image" type="button">Previous</button>
+          <button id="reset-view" type="button">Reset view</button>
+          <button id="next-image" type="button">Next</button>
+        </div>
+      </header>
+
+      <section class="filmstrip" aria-label="Panorama images">
+        <div class="filmstrip-header">
+          <span>Images folder</span>
+          <small id="image-count">0 images</small>
+        </div>
+        <div id="gallery" class="gallery"></div>
+      </section>
+
+      <p id="status" class="status" role="status">Looking for images...</p>
+
+      <div class="help-panel" aria-label="How to use the viewer">
+        <span>Drag to look around</span>
+        <span>Scroll or pinch to zoom</span>
+        <span>Arrow keys rotate</span>
+      </div>
+    </main>
+
+    <script type="module" src="viewer.js"></script>
+  </body>
+</html>

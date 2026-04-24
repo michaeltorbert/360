@@ -1,0 +1,11 @@
+{
+  "name": "360-sydney",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "manifest": "node scripts/build-image-manifest.mjs",
+    "check": "node --check server.mjs && node --check scripts/build-image-manifest.mjs && node --check viewer.js"
+  }
+}
