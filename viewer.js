@@ -14,6 +14,7 @@ const elements = {
   status: document.querySelector("#status"),
   previous: document.querySelector("#previous-image"),
   next: document.querySelector("#next-image"),
+  refresh: document.querySelector("#refresh-images"),
   reset: document.querySelector("#reset-view")
 };
 
@@ -93,11 +94,11 @@ function normalizeImageList(data) {
   }
 
   return rawImages
-    .map((entry, index) => {
+    .map((entry) => {
       if (typeof entry === "string") {
         return {
           src: entry,
-          title: titleFromPath(entry, index)
+          title: titleFromPath(entry)
         };
       }
 
@@ -107,7 +108,7 @@ function normalizeImageList(data) {
 
       return {
         src: entry.src,
-        title: entry.title || titleFromPath(entry.src, index)
+        title: entry.title || titleFromPath(entry.src)
       };
     })
     .filter(Boolean);
@@ -314,6 +315,7 @@ function bindControls() {
 
   elements.previous.addEventListener("click", () => showRelativeImage(-1));
   elements.next.addEventListener("click", () => showRelativeImage(1));
+  elements.refresh.addEventListener("click", () => refreshImages().catch((error) => setStatus(error.message)));
   elements.reset.addEventListener("click", resetView);
 }
 
@@ -409,6 +411,30 @@ function showRelativeImage(offset) {
 
   const nextIndex = (state.currentIndex + offset + state.images.length) % state.images.length;
   showImage(nextIndex).catch((error) => setStatus(error.message));
+}
+
+async function refreshImages() {
+  const currentSrc = state.images[state.currentIndex]?.src;
+  const images = await loadImageList();
+
+  if (images.length === 0) {
+    state.images = [];
+    state.currentIndex = 0;
+    state.textureReady = false;
+    renderGallery();
+    updateImageCount();
+    updateControls();
+    setTitle("No panoramas found");
+    setStatus("No supported images were found in the images folder.");
+    return;
+  }
+
+  const nextIndex = Math.max(0, images.findIndex((image) => image.src === currentSrc));
+  state.images = images;
+  renderGallery();
+  updateImageCount();
+  updateControls();
+  await showImage(nextIndex);
 }
 
 function resetView() {
@@ -513,18 +539,14 @@ function setTitle(title) {
   elements.imageTitle.textContent = title;
 }
 
-function titleFromPath(src, index = 0) {
+function titleFromPath(src) {
   const filename = decodeURIComponent(src.split("/").pop() || src);
 
-  return titleFromName(filename, index);
+  return titleFromName(filename);
 }
 
-function titleFromName(filename, index = 0) {
+function titleFromName(filename) {
   const basename = filename.replace(/\.[^.]+$/, "");
-
-  if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(basename)) {
-    return `Panorama ${index + 1}`;
-  }
 
   return basename
     .replace(/[-_]+/g, " ")

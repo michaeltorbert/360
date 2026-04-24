@@ -1,12 +1,16 @@
 {
   "images": [
     {
-      "src": "images/50e289b4-b900-4788-b377-64438c4ba513.png",
-      "title": "Panorama 1"
+      "src": "images/granada-palacio-de-carlos-v.png",
+      "title": "Granada Palacio De Carlos V"
     },
     {
-      "src": "images/fb22c43c-335e-4573-b662-ce4e66aaaec5.png",
-      "title": "Panorama 2"
+      "src": "images/taj-mahal-kayak-close.png",
+      "title": "Taj Mahal Kayak Close"
+    },
+    {
+      "src": "images/taj-mahal-kayak-wide.png",
+      "title": "Taj Mahal Kayak Wide"
     }
   ]
 }

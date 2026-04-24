@@ -8,7 +8,9 @@ A dependency-free browser viewer for equirectangular 360 images.
 node server.mjs
 ```
 
-Open `http://localhost:4173`. The local server scans `images/` on each page load, so any `.png`, `.jpg`, `.jpeg`, `.webp`, or `.avif` file added to that folder appears in the viewer.
+Open `http://localhost:4173`. The local server scans `images/`, so any `.png`, `.jpg`, `.jpeg`, `.webp`, or `.avif` file added to that folder appears in the viewer after a page load or after clicking **Refresh images**.
+
+Selector titles come from filenames. For example, `taj-mahal-kayak-wide.png` appears as `Taj Mahal Kayak Wide`.
 
 ## Static hosting
 

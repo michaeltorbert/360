@@ -53,9 +53,9 @@ async function readImagesFolder() {
   return entries
     .filter((entry) => entry.isFile() && supportedImageExtensions.has(path.extname(entry.name).toLowerCase()))
     .sort((left, right) => left.name.localeCompare(right.name, undefined, { numeric: true }))
-    .map((entry, index) => ({
+    .map((entry) => ({
       src: `images/${encodeURIComponent(entry.name)}`,
-      title: titleFromFilename(entry.name, index)
+      title: titleFromFilename(entry.name)
     }));
 }
 
@@ -120,12 +120,8 @@ function writeText(response, statusCode, body) {
   response.end(body);
 }
 
-function titleFromFilename(filename, index = 0) {
+function titleFromFilename(filename) {
   const basename = filename.replace(/\.[^.]+$/, "");
-
-  if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(basename)) {
-    return `Panorama ${index + 1}`;
-  }
 
   return basename
     .replace(/[-_]+/g, " ")
